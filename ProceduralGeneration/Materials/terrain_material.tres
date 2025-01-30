@@ -1,0 +1,29 @@
+[gd_resource type="ShaderMaterial" load_steps=6 format=3 uid="uid://ddi1i65re1k7l"]
+
+[ext_resource type="Shader" path="res://ProceduralGeneration/Materials/terrai_shader.gdshader" id="1_tq08c"]
+
+[sub_resource type="Gradient" id="Gradient_cckj8"]
+offsets = PackedFloat32Array(0.0769231, 0.223464, 0.268156, 0.27933, 0.530726, 0.664804, 0.782123, 0.843575)
+colors = PackedColorArray(0.0653434, 0.282407, 0.450063, 1, 0.179638, 0.555573, 0.625828, 1, 0.79455, 0.757008, 0.212441, 1, 0.327704, 0.571566, 0.364297, 1, 0.258242, 0.414993, 0.205299, 1, 0.561427, 0.4337, 0.254258, 1, 0.718103, 0.334423, 0.264107, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fqhvh"]
+gradient = SubResource("Gradient_cckj8")
+width = 512
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hwi55"]
+noise_type = 0
+frequency = 0.0144
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lpdji"]
+width = 2048
+height = 2048
+seamless = true
+as_normal_map = true
+noise = SubResource("FastNoiseLite_hwi55")
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_tq08c")
+shader_parameter/height = 85.0
+shader_parameter/color_gradient = SubResource("GradientTexture1D_fqhvh")
+shader_parameter/normal_map = SubResource("NoiseTexture2D_lpdji")

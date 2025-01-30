@@ -1,0 +1,142 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpv6pphbftkax"]
+
+[ext_resource type="Script" path="res://UI/ui_generate.gd" id="1_i6rht"]
+[ext_resource type="Script" path="res://UI/slider_value_change.gd" id="2_eeb5f"]
+
+[node name="Ui_generate" type="CanvasLayer"]
+script = ExtResource("1_i6rht")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="MarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -292.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Seed" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Seed"
+
+[node name="Frequency" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Frequency"
+
+[node name="Lacunarity" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Lacunarity"
+
+[node name="NoiseType" type="Label" parent="Control/MarginContainer/HBoxContainer/VBoxContainer2"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NoiseType"
+
+[node name="SliderContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="SeedSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer" node_paths=PackedStringArray("label")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 51)
+layout_mode = 2
+max_value = 10000.0
+script = ExtResource("2_eeb5f")
+label = NodePath("../../ValueContainer/Seed")
+
+[node name="FrequencySlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer" node_paths=PackedStringArray("label")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 51)
+layout_mode = 2
+max_value = 1.0
+step = 0.001
+value = 0.005
+script = ExtResource("2_eeb5f")
+label = NodePath("../../ValueContainer/Frequency")
+
+[node name="LacunaritySlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer" node_paths=PackedStringArray("label")]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 51)
+layout_mode = 2
+max_value = 10.0
+step = 0.1
+value = 2.0
+script = ExtResource("2_eeb5f")
+label = NodePath("../../ValueContainer/Lacunarity")
+
+[node name="NoiseTypeSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(200, 51)
+layout_mode = 2
+min_value = 1.0
+max_value = 5.0
+value = 1.0
+
+[node name="ValueContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Seed" type="Label" parent="Control/MarginContainer/HBoxContainer/ValueContainer"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Seed"
+
+[node name="Frequency" type="Label" parent="Control/MarginContainer/HBoxContainer/ValueContainer"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Frequency"
+
+[node name="Lacunarity" type="Label" parent="Control/MarginContainer/HBoxContainer/ValueContainer"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Lacunarity"
+
+[node name="NoiseType" type="Label" parent="Control/MarginContainer/HBoxContainer/ValueContainer"]
+custom_minimum_size = Vector2(0, 53)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "NoiseType"
+
+[node name="ValueContainer2" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer/ValueContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Generate"
+
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/ValueContainer2/Generate" to="." method="_on_generate_pressed"]
