@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://bpv6pphbftkax"]
+[gd_scene load_steps=4 format=3 uid="uid://bpv6pphbftkax"]
 
 [ext_resource type="Script" path="res://UI/ui_generate.gd" id="1_i6rht"]
 [ext_resource type="Script" path="res://UI/slider_value_change.gd" id="2_eeb5f"]
+[ext_resource type="Script" path="res://UI/NoiseTypeSlider.gd" id="3_i384m"]
 
 [node name="Ui_generate" type="CanvasLayer"]
 script = ExtResource("1_i6rht")
@@ -94,15 +95,17 @@ value = 2.0
 script = ExtResource("2_eeb5f")
 label = NodePath("../../ValueContainer/Lacunarity")
 
-[node name="NoiseTypeSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer"]
+[node name="NoiseTypeSlider" type="HSlider" parent="Control/MarginContainer/HBoxContainer/SliderContainer" node_paths=PackedStringArray("label")]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(200, 51)
 layout_mode = 2
-min_value = 1.0
 max_value = 5.0
 value = 1.0
+script = ExtResource("3_i384m")
+label = NodePath("../../ValueContainer/NoiseType")
 
 [node name="ValueContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 theme_override_constants/separation = 16
 
@@ -132,6 +135,7 @@ text = "NoiseType"
 
 [node name="ValueContainer2" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
+size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
 [node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer/ValueContainer2"]

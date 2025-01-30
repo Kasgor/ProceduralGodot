@@ -16,6 +16,7 @@ func reasign_values():
 	terrain_node.noise.seed = int(value_seed.value)
 	terrain_node.noise.frequency = float(value_frequency.value)
 	terrain_node.noise.fractal_lacunarity = float(value_lacunarity.value)
+	terrain_node.noise.noise_type = float(value_noise.value)
 
 func _on_generate_pressed():
 	reasign_values()
