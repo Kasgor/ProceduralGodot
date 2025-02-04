@@ -1,3 +1,4 @@
+class_name UI_Generate
 extends CanvasLayer
 
 
@@ -7,15 +8,17 @@ extends CanvasLayer
 @onready var value_noise =%NoiseTypeSlider
 @onready var preview= %Preview 
 @onready var terrain_node = $"../Terrain"
+@onready var load_screen = %LoadingScreen
 
 var noisetexture = NoiseTexture2D.new() 
 @export var noise: FastNoiseLite
 
 
+
 signal generate_terrain_via_ui
 
 func _ready():
-	pass
+	load_screen.hide()
 	#noisetexture.width = 2048
 	#noisetexture.height = 2048
 	#noisetexture.noise = noise
@@ -39,9 +42,15 @@ func reasign_values():
 	#preview.material = material
 	
 
+func toggle_loading_screen():
+	#print(%LoadingScreen.visible)
+	if (load_screen.visible):
+		load_screen.visible =false
+	else:
+		load_screen.visible = true
+
+
 func _on_generate_pressed():
 	reasign_values()
 	
-	print(terrain_node.noise.seed)
-	print(terrain_node.noise.frequency)
 	generate_terrain_via_ui.emit()

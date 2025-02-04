@@ -8,18 +8,27 @@ var size_width: int = 200
 var mesh_res : int = 3
 var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_material.tres")
 
+var task_id = -1
 @export var noise: FastNoiseLite
- 
+@export var UI_generate: UI_Generate
 
 func _ready():
-	
+	set_process(false)
 	generate()
-	
+
+func start():
+	task_id = WorkerThreadPool.add_task(generate)
+	if (UI_generate!=null):
+		UI_generate.toggle_loading_screen()
+	#set_process(true)
+
+
+
+
 func generate():
-	#var rand_seed = randi_range(0, 100000)
-	#var rand_frequency = randf_range(0.005, 0.007)
-	#noise.seed = rand_seed
-	#noise.frequency = rand_frequency
+	
+	#start()
+
 	var plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(size_width, size_depth)
 	plane_mesh.subdivide_depth = size_depth*mesh_res
@@ -63,15 +72,17 @@ func generate():
 
 
 
+
+
 func get_noise_y(x, z)->float:
 	var value = noise.get_noise_2d(x, z)
 	return value*50
 
 
-#TODO NOISE TYPE
-#func reasign_values():
-	#pass
 
+func toggle_load():
+	if (UI_generate!=null):
+		UI_generate.toggle_loading_screen
 
 func _on_ui_generate_generate_terrain_via_ui():
 	print(noise.seed)
@@ -79,4 +90,8 @@ func _on_ui_generate_generate_terrain_via_ui():
 	for n in self.get_children():
 		self.remove_child(n)
 		n.queue_free()
-	generate()
+	if (UI_generate!=null):
+		await UI_generate.toggle_loading_screen()
+	await generate()
+	if (UI_generate!=null):
+		UI_generate.toggle_loading_screen()

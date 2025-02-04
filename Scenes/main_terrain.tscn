@@ -35,13 +35,17 @@ size = Vector3(1, 130.76, 1)
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_fhte3")
 
+[node name="Ui_generate" parent="." instance=ExtResource("4_inqlm")]
+noise = SubResource("FastNoiseLite_hwi55")
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Terrain" type="Node" parent="."]
+[node name="Terrain" type="Node" parent="." node_paths=PackedStringArray("UI_generate")]
 script = ExtResource("1_c10n1")
 noise = SubResource("FastNoiseLite_hwi55")
+UI_generate = NodePath("../Ui_generate")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_4xbeq")
@@ -49,8 +53,5 @@ mesh = SubResource("BoxMesh_4xbeq")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.35558, 0.934646, 0, -0.934646, 0.35558, 0, 71.809, 48.8882)
 script = ExtResource("3_iqw0y")
-
-[node name="Ui_generate" parent="." instance=ExtResource("4_inqlm")]
-noise = SubResource("FastNoiseLite_hwi55")
 
 [connection signal="generate_terrain_via_ui" from="Ui_generate" to="Terrain" method="_on_ui_generate_generate_terrain_via_ui"]
