@@ -6,6 +6,7 @@ var mesh: MeshInstance3D
 var size_depth: int = 200
 var size_width: int = 200
 var mesh_res : int = 3
+
 var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_material.tres")
 
 var task_id = -1
@@ -85,13 +86,14 @@ func toggle_load():
 		UI_generate.toggle_loading_screen
 
 func _on_ui_generate_generate_terrain_via_ui():
-	print(noise.seed)
-	print(noise.frequency)
+
+	#Signals.emit_signal("toggle_load_screen")
+
 	for n in self.get_children():
 		self.remove_child(n)
 		n.queue_free()
-	if (UI_generate!=null):
-		await UI_generate.toggle_loading_screen()
-	await generate()
-	if (UI_generate!=null):
-		UI_generate.toggle_loading_screen()
+	
+	
+	generate()
+	
+	
