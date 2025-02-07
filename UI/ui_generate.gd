@@ -18,8 +18,9 @@ var noisetexture = NoiseTexture2D.new()
 signal generate_terrain_via_ui
 
 func _ready():
-	Signals.connect("toggle_load_screen", toggle_loading_screen)
-	Signals.toggle_load_screen.emit()
+	Signals.connect("toggle_load_screen", toggle_loading_screen_generate)
+	Signals.connect("reasign_values_signal", reasign_values)
+	Signals.toggle_load_screen.emit(false)
 	#noisetexture.width = 2048
 	#noisetexture.height = 2048
 	#noisetexture.noise = noise
@@ -43,19 +44,28 @@ func reasign_values():
 	#preview.material = material
 	
 
-func toggle_loading_screen():
+func toggle_loading_screen_generate(generate: bool):
 	#print(%LoadingScreen.visible)
 	if (load_screen.visible):
 		load_screen.hide()
 	else:
 		load_screen.show()
+	await RenderingServer.frame_post_draw
+	await get_tree().process_frame
+	if (generate):
+		Signals.generate_terrain_via_ui.emit()
 	#Signals.finished.emit()
 	
 
 
 func _on_generate_pressed():
-	Signals.emit_signal("toggle_load_screen")
-	#await Signals.finished
 	reasign_values()
+	Signals.emit_signal("toggle_load_screen", true)
+	#await Signals.finished
 	
-	generate_terrain_via_ui.emit()
+	
+	
+
+
+func _on_change_material_pressed():
+	Signals.emit_signal("change_material_of_the_mesh_signal")# Replace with function body.

@@ -12,7 +12,11 @@ width = 512
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hwi55"]
 noise_type = 0
-frequency = 0.0144
+frequency = 0.0057
+domain_warp_fractal_type = 0
+domain_warp_fractal_octaves = 10
+domain_warp_fractal_lacunarity = 7.99
+domain_warp_fractal_gain = 1.11
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lpdji"]
 width = 2048

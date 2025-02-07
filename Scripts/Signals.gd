@@ -3,3 +3,6 @@ extends Node
 
 signal toggle_load_screen
 signal finished
+signal generate_terrain_via_ui
+signal change_material_of_the_mesh_signal
+signal reasign_values_signal

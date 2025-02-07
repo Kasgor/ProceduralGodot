@@ -1,0 +1,11 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://ci2e0b78p5qmu"]
+
+[ext_resource type="Shader" uid="uid://c05dec68mkx1e" path="res://ProceduralGeneration/Materials/second_texture/TerrainShader.tres" id="1_84kn5"]
+[ext_resource type="Texture2D" uid="uid://c5y2d6kbgr4k5" path="res://ProceduralGeneration/Materials/second_texture/Grass.jpg" id="2_d4n7v"]
+[ext_resource type="Texture2D" uid="uid://chuasc8viffmc" path="res://ProceduralGeneration/Materials/second_texture/Stone.jpg" id="3_kf72t"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_84kn5")
+shader_parameter/tex_frg_2 = ExtResource("2_d4n7v")
+shader_parameter/tex_frg_3 = ExtResource("3_kf72t")

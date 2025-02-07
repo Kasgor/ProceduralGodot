@@ -145,21 +145,47 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "NoiseType"
 
-[node name="ValueContainer2" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+[node name="GenerateNoiseContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
-[node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer/ValueContainer2"]
+[node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Generate"
 
-[node name="Preview" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/ValueContainer2"]
+[node name="Preview" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1ecp8")
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+
+[node name="UpperMarginContainer" type="MarginContainer" parent="Control"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 32.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/UpperMarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 32
+alignment = 2
+
+[node name="AdditionalChanges" type="VBoxContainer" parent="Control/UpperMarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="ChangeMaterial" type="Button" parent="Control/UpperMarginContainer/HBoxContainer/AdditionalChanges"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Material"
 
 [node name="LoadingScreen" type="ColorRect" parent="Control"]
 unique_name_in_owner = true
@@ -187,4 +213,5 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "Loading..."
 
-[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/ValueContainer2/Generate" to="." method="_on_generate_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer/Generate" to="." method="_on_generate_pressed"]
+[connection signal="pressed" from="Control/UpperMarginContainer/HBoxContainer/AdditionalChanges/ChangeMaterial" to="." method="_on_change_material_pressed"]

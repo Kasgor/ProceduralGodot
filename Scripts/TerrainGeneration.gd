@@ -6,31 +6,25 @@ var mesh: MeshInstance3D
 var size_depth: int = 200
 var size_width: int = 200
 var mesh_res : int = 3
-
+var plane_mesh
 var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_material.tres")
+var mesh_material_grass = preload("res://ProceduralGeneration/Materials/second_texture/TerrainMaterialGrass.tres")
 
 var task_id = -1
 @export var noise: FastNoiseLite
-@export var UI_generate: UI_Generate
+
 
 func _ready():
-	set_process(false)
+	Signals.connect("generate_terrain_via_ui", _on_ui_generate_generate_terrain_via_ui)
+	Signals.connect("change_material_of_the_mesh_signal", change_material)
 	generate()
-
-func start():
-	task_id = WorkerThreadPool.add_task(generate)
-	if (UI_generate!=null):
-		UI_generate.toggle_loading_screen()
-	#set_process(true)
-
-
 
 
 func generate():
 	
 	#start()
 
-	var plane_mesh = PlaneMesh.new()
+	plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(size_width, size_depth)
 	plane_mesh.subdivide_depth = size_depth*mesh_res
 	plane_mesh.subdivide_width = size_width*mesh_res
@@ -41,6 +35,7 @@ func generate():
 
 	
 	plane_mesh.material = mesh_material
+	#plane_mesh.material = mesh_material_grass
 	
 	var surface := SurfaceTool.new()
 	var data = MeshDataTool.new()
@@ -72,7 +67,13 @@ func generate():
 	add_child(mesh)
 
 
-
+func change_material():
+	#TODO CHANGE OF MATERIAL
+	pass
+	#if (mesh.mesh.back.material == mesh_material):
+	#	mesh.mesh.material = mesh_material_grass
+	#else:
+	#	mesh.mesh.material = mesh_material
 
 
 func get_noise_y(x, z)->float:
@@ -80,20 +81,13 @@ func get_noise_y(x, z)->float:
 	return value*50
 
 
-
-func toggle_load():
-	if (UI_generate!=null):
-		UI_generate.toggle_loading_screen
-
 func _on_ui_generate_generate_terrain_via_ui():
-
-	#Signals.emit_signal("toggle_load_screen")
-
+	
 	for n in self.get_children():
 		self.remove_child(n)
 		n.queue_free()
 	
 	
-	generate()
+	await generate()
 	
-	
+	Signals.emit_signal("toggle_load_screen", false)
