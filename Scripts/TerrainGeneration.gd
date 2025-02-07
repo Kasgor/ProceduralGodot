@@ -6,7 +6,7 @@ var mesh: MeshInstance3D
 var size_depth: int = 200
 var size_width: int = 200
 var mesh_res : int = 3
-var plane_mesh
+var plane_mesh = PlaneMesh.new()
 var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_material.tres")
 var mesh_material_grass = preload("res://ProceduralGeneration/Materials/second_texture/TerrainMaterialGrass.tres")
 
@@ -15,6 +15,7 @@ var task_id = -1
 
 
 func _ready():
+	plane_mesh.material = mesh_material
 	Signals.connect("generate_terrain_via_ui", _on_ui_generate_generate_terrain_via_ui)
 	Signals.connect("change_material_of_the_mesh_signal", change_material)
 	generate()
@@ -24,7 +25,7 @@ func generate():
 	
 	#start()
 
-	plane_mesh = PlaneMesh.new()
+	#plane_mesh = PlaneMesh.new()
 	plane_mesh.size = Vector2(size_width, size_depth)
 	plane_mesh.subdivide_depth = size_depth*mesh_res
 	plane_mesh.subdivide_width = size_width*mesh_res
@@ -34,7 +35,7 @@ func generate():
 	#mesh_material.set("shader_parameter/normal_map/noise", noise)
 
 	
-	plane_mesh.material = mesh_material
+	#plane_mesh.material = mesh_material
 	#plane_mesh.material = mesh_material_grass
 	
 	var surface := SurfaceTool.new()
@@ -68,12 +69,12 @@ func generate():
 
 
 func change_material():
-	#TODO CHANGE OF MATERIAL
-	pass
-	#if (mesh.mesh.back.material == mesh_material):
-	#	mesh.mesh.material = mesh_material_grass
-	#else:
-	#	mesh.mesh.material = mesh_material
+	if (plane_mesh.material == mesh_material):
+		plane_mesh.material = mesh_material_grass
+		mesh.set_surface_override_material(0, mesh_material_grass )
+	else:
+		plane_mesh.material = mesh_material
+		mesh.set_surface_override_material(0, mesh_material)
 
 
 func get_noise_y(x, z)->float:

@@ -11,6 +11,7 @@ func _ready():
 func _change_text_label(value: float):
 	#print
 	label.text = choose_label_name_depending_on_noise_type(value)
+	Signals.reasign_values_signal.emit()
 	
 func choose_label_name_depending_on_noise_type(value:int):
 	var text
