@@ -9,17 +9,28 @@ var mesh_res : int = 3
 var plane_mesh = PlaneMesh.new()
 var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_material.tres")
 var mesh_material_grass = preload("res://ProceduralGeneration/Materials/second_texture/TerrainMaterialGrass.tres")
+var max_height: float = 50
+@export var falloff_enabled: bool
 
 var task_id = -1
 @export var noise: FastNoiseLite
+@export var elevation_curve: Curve
 
+var falloff_image: Image
+
+@onready var number_generator: RandomNumberGenerator = RandomNumberGenerator.new()
+var spawnable_objects : Array[Spawnable]
 
 func _ready():
+	get_spawnables()
+	
 	plane_mesh.material = mesh_material
+	var falloff_texture = preload("res://ProceduralGeneration/Materials/second_texture/TerrainFalloff.png")
+	falloff_image = falloff_texture.get_image()
 	Signals.connect("generate_terrain_via_ui", _on_ui_generate_generate_terrain_via_ui)
 	Signals.connect("change_material_of_the_mesh_signal", change_material)
 	generate()
-
+	number_generator.seed = randi()
 
 func generate():
 	
@@ -67,6 +78,16 @@ func generate():
 	
 	add_child(mesh)
 
+func get_spawnables():
+	for i in get_children():
+		if i is Spawnable:
+			spawnable_objects.append(i)
+
+func get_random_position_on_terrain():
+	var x = number_generator.randf_range(-size_width/2, size_width/2)
+	var z = number_generator.randf_range(-size_depth/2, size_depth/2)
+	var y = get_noise_y(x, z)
+	return Vector3(x, y, z)
 
 func change_material():
 	if (plane_mesh.material == mesh_material):
@@ -79,14 +100,30 @@ func change_material():
 
 func get_noise_y(x, z)->float:
 	var value = noise.get_noise_2d(x, z)
-	return value*50
+	var remapped_value = (value+1)/2
+	var adjusted_value = elevation_curve.sample(remapped_value)
+	adjusted_value = (adjusted_value*2)-1
+	
+	var falloff_value_impact_x = (x+(size_width/2))/size_width
+	var falloff_value_impact_z = (z+(size_depth/2))/size_depth
+	
+	var fallof_pixel_x = int(falloff_value_impact_x*falloff_image.get_width())
+	var fallof_pixel_z = int(falloff_value_impact_z*falloff_image.get_height())
+	var falloff
+	falloff = falloff_image.get_pixel(fallof_pixel_x, fallof_pixel_z).r
+
+	if (falloff_enabled):
+		return adjusted_value*max_height*falloff
+	else :
+		return adjusted_value*max_height
 
 
 func _on_ui_generate_generate_terrain_via_ui():
 	
 	for n in self.get_children():
-		self.remove_child(n)
-		n.queue_free()
+		if not n is  Spawnable:
+			self.remove_child(n)
+			n.queue_free()
 	
 	
 	await generate()

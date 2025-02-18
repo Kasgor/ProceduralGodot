@@ -1,6 +1,6 @@
 shader_type spatial;
 
-uniform float height = 64.0;
+uniform float height = 120.0;
 uniform sampler2D color_gradient;
 uniform sampler2D normal_map;
 

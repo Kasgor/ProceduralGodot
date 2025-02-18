@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b6c4wvsk1okon"]
+[gd_scene load_steps=11 format=3 uid="uid://b6c4wvsk1okon"]
 
 [ext_resource type="Material" uid="uid://ddi1i65re1k7l" path="res://ProceduralGeneration/Materials/terrain_material.tres" id="2_77l3f"]
 [ext_resource type="PackedScene" uid="uid://r371ewej50xf" path="res://Scenes/terrain.tscn" id="2_e6s7w"]
@@ -26,6 +26,10 @@ domain_warp_fractal_octaves = 10
 domain_warp_fractal_lacunarity = 7.99
 domain_warp_fractal_gain = 1.11
 
+[sub_resource type="Curve" id="Curve_vuvyo"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
 [sub_resource type="BoxMesh" id="BoxMesh_4xbeq"]
 material = ExtResource("2_77l3f")
 size = Vector3(1, 130.76, 1)
@@ -44,6 +48,7 @@ shadow_enabled = true
 
 [node name="Terrain" parent="." instance=ExtResource("2_e6s7w")]
 noise = SubResource("FastNoiseLite_hwi55")
+elevation_curve = SubResource("Curve_vuvyo")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_4xbeq")

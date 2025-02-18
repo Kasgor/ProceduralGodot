@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c1igw0w32enwf"]
+
+[ext_resource type="Script" path="res://Scripts/Spawnable.gd" id="1_dgekd"]
+
+[node name="SpawnableTree" type="Node"]
+script = ExtResource("1_dgekd")
+spawn_count = 100
+max_scale = 1.25
