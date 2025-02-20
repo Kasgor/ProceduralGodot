@@ -77,6 +77,9 @@ func generate():
 	#mesh.position += Vector3(0, -1, 0)
 	
 	add_child(mesh)
+	
+	for i in spawnable_objects:
+		spawn_objects(i)
 
 func get_spawnables():
 	for i in get_children():
@@ -88,6 +91,19 @@ func get_random_position_on_terrain():
 	var z = number_generator.randf_range(-size_depth/2, size_depth/2)
 	var y = get_noise_y(x, z)
 	return Vector3(x, y, z)
+
+func spawn_objects(spawnable: Spawnable):
+	for i in range(spawnable.spawn_count):
+		var object = spawnable.scene_to_spawn[number_generator.randi() % spawnable.scene_to_spawn.size()].instantiate()
+		object.add_to_group("NavSource")
+		add_child(object)
+		
+		var random_position = get_random_position_on_terrain()
+		
+		object.position = random_position
+		object.scale = Vector3.ONE * number_generator.randf_range(spawnable.min_scale, spawnable.max_scale)
+		object.rotation_degrees.y = number_generator.randf_range(0, 360)
+	
 
 func change_material():
 	if (plane_mesh.material == mesh_material):
@@ -110,9 +126,10 @@ func get_noise_y(x, z)->float:
 	var fallof_pixel_x = int(falloff_value_impact_x*falloff_image.get_width())
 	var fallof_pixel_z = int(falloff_value_impact_z*falloff_image.get_height())
 	var falloff
-	falloff = falloff_image.get_pixel(fallof_pixel_x, fallof_pixel_z).r
+
 
 	if (falloff_enabled):
+		falloff = falloff_image.get_pixel(fallof_pixel_x, fallof_pixel_z).r
 		return adjusted_value*max_height*falloff
 	else :
 		return adjusted_value*max_height

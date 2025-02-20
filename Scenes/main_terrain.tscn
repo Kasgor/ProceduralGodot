@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://b6c4wvsk1okon"]
+[gd_scene load_steps=12 format=3 uid="uid://b6c4wvsk1okon"]
 
 [ext_resource type="Material" uid="uid://ddi1i65re1k7l" path="res://ProceduralGeneration/Materials/terrain_material.tres" id="2_77l3f"]
 [ext_resource type="PackedScene" uid="uid://r371ewej50xf" path="res://Scenes/terrain.tscn" id="2_e6s7w"]
 [ext_resource type="Script" path="res://Scripts/Camera/CameraMovement.gd" id="3_iqw0y"]
+[ext_resource type="PackedScene" uid="uid://c1igw0w32enwf" path="res://Scenes/spawnable_tree.tscn" id="3_j602k"]
 [ext_resource type="PackedScene" uid="uid://bpv6pphbftkax" path="res://UI/ui_generate.tscn" id="4_inqlm"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hda2h"]
@@ -49,6 +50,8 @@ shadow_enabled = true
 [node name="Terrain" parent="." instance=ExtResource("2_e6s7w")]
 noise = SubResource("FastNoiseLite_hwi55")
 elevation_curve = SubResource("Curve_vuvyo")
+
+[node name="SpawnableTree" parent="Terrain" instance=ExtResource("3_j602k")]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_4xbeq")

@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://c1igw0w32enwf"]
+[gd_scene load_steps=3 format=3 uid="uid://c1igw0w32enwf"]
 
 [ext_resource type="Script" path="res://Scripts/Spawnable.gd" id="1_dgekd"]
+[ext_resource type="PackedScene" uid="uid://dju443moxaprb" path="res://ProceduralGeneration/TreeExample/Tree.tscn" id="2_foeb1"]
 
 [node name="SpawnableTree" type="Node"]
 script = ExtResource("1_dgekd")
-spawn_count = 100
+scene_to_spawn = Array[PackedScene]([ExtResource("2_foeb1")])
+spawn_count = 500
 max_scale = 1.25
