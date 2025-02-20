@@ -17,6 +17,21 @@ func choose_label_name_depending_on_noise_type(value:int):
 	var text
 	match value:
 		0:
+			text ="1 simple"
+		1:
+			text ="smoth simple"
+		2:
+			text ="cellurar"
+		3:
+			text ="perlin"
+		4:
+			text ="cubic of value"
+		5:
+			text ="value"
+	
+	""" 
+	match value:
+		0:
 			text ="TYPE_SIMPLEX"
 		1:
 			text ="TYPE_SIMPLEX_SMOOTH"
@@ -28,4 +43,5 @@ func choose_label_name_depending_on_noise_type(value:int):
 			text ="TYPE_VALUE_CUBIC"
 		5:
 			text ="TYPE_VALUE"
+	"""
 	return text

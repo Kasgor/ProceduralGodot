@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://b6c4wvsk1okon"]
+[gd_scene load_steps=13 format=3 uid="uid://b6c4wvsk1okon"]
 
 [ext_resource type="Material" uid="uid://ddi1i65re1k7l" path="res://ProceduralGeneration/Materials/terrain_material.tres" id="2_77l3f"]
 [ext_resource type="PackedScene" uid="uid://r371ewej50xf" path="res://Scenes/terrain.tscn" id="2_e6s7w"]
 [ext_resource type="Script" path="res://Scripts/Camera/CameraMovement.gd" id="3_iqw0y"]
 [ext_resource type="PackedScene" uid="uid://c1igw0w32enwf" path="res://Scenes/spawnable_tree.tscn" id="3_j602k"]
 [ext_resource type="PackedScene" uid="uid://bpv6pphbftkax" path="res://UI/ui_generate.tscn" id="4_inqlm"]
+[ext_resource type="PackedScene" uid="uid://lvf727e7thgg" path="res://water.tscn" id="6_lh12e"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hda2h"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -17,7 +18,13 @@ sky_material = SubResource("ProceduralSkyMaterial_hda2h")
 background_mode = 2
 sky = SubResource("Sky_icf0p")
 tonemap_mode = 2
+ssao_enabled = true
 glow_enabled = true
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.273643, 0.737801, 0.913683, 1)
+adjustment_enabled = true
+adjustment_saturation = 1.1
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_hwi55"]
 noise_type = 0
@@ -28,8 +35,8 @@ domain_warp_fractal_lacunarity = 7.99
 domain_warp_fractal_gain = 1.11
 
 [sub_resource type="Curve" id="Curve_vuvyo"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
-point_count = 2
+_data = [Vector2(0.112821, 0), 0.0, 0.0, 0, 0, Vector2(0.225641, 0.232283), 0.660462, 0.660462, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 3
 
 [sub_resource type="BoxMesh" id="BoxMesh_4xbeq"]
 material = ExtResource("2_77l3f")
@@ -59,3 +66,5 @@ mesh = SubResource("BoxMesh_4xbeq")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.35558, 0.934646, 0, -0.934646, 0.35558, 0, 71.809, 48.8882)
 script = ExtResource("3_iqw0y")
+
+[node name="water" parent="." instance=ExtResource("6_lh12e")]

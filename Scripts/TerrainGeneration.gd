@@ -11,6 +11,8 @@ var mesh_material = preload("res://ProceduralGeneration/Materials/terrain_materi
 var mesh_material_grass = preload("res://ProceduralGeneration/Materials/second_texture/TerrainMaterialGrass.tres")
 var max_height: float = 50
 @export var falloff_enabled: bool
+@export var water_level: float = -0.5
+@onready var water: MeshInstance3D = $"../water"
 
 var task_id = -1
 @export var noise: FastNoiseLite
@@ -77,6 +79,7 @@ func generate():
 	#mesh.position += Vector3(0, -1, 0)
 	
 	add_child(mesh)
+	water.position.y = water_level*max_height
 	
 	for i in spawnable_objects:
 		spawn_objects(i)
@@ -99,6 +102,9 @@ func spawn_objects(spawnable: Spawnable):
 		add_child(object)
 		
 		var random_position = get_random_position_on_terrain()
+		
+		while random_position.y < water_level*max_height:
+			random_position = get_random_position_on_terrain()
 		
 		object.position = random_position
 		object.scale = Vector3.ONE * number_generator.randf_range(spawnable.min_scale, spawnable.max_scale)
