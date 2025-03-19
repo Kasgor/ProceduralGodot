@@ -4,7 +4,7 @@ extends HSlider
 @export var label :Label
 
 func _ready():
-	label.text = "TYPE_SIMPLEX_SMOOTH"
+	label.text = "smoth simple"
 	value_changed.connect(_change_text_label)
 	
 

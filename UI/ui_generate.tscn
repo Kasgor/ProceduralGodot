@@ -145,17 +145,21 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "NoiseType"
 
-[node name="GenerateNoiseContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="Control/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="GenerateNoiseContainer" type="VBoxContainer" parent="Control/MarginContainer/HBoxContainer2"]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
-[node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer"]
+[node name="Generate" type="Button" parent="Control/MarginContainer/HBoxContainer2/GenerateNoiseContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
 text = "Generate"
 
-[node name="Preview" type="ColorRect" parent="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer"]
+[node name="Preview" type="ColorRect" parent="Control/MarginContainer/HBoxContainer2/GenerateNoiseContainer"]
 unique_name_in_owner = true
 material = SubResource("ShaderMaterial_1ecp8")
 custom_minimum_size = Vector2(200, 200)
@@ -213,5 +217,5 @@ grow_vertical = 2
 theme_override_font_sizes/font_size = 32
 text = "Loading..."
 
-[connection signal="pressed" from="Control/MarginContainer/HBoxContainer/GenerateNoiseContainer/Generate" to="." method="_on_generate_pressed"]
+[connection signal="pressed" from="Control/MarginContainer/HBoxContainer2/GenerateNoiseContainer/Generate" to="." method="_on_generate_pressed"]
 [connection signal="pressed" from="Control/UpperMarginContainer/HBoxContainer/AdditionalChanges/ChangeMaterial" to="." method="_on_change_material_pressed"]
